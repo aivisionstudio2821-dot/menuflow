@@ -1,0 +1,15 @@
+import { createClient } from "@supabase/supabase-js";
+
+const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || "";
+const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || "";
+
+export const isSupabaseConfigured =
+  Boolean(supabaseUrl) &&
+  Boolean(supabaseAnonKey) &&
+  !supabaseUrl.includes("your-project.supabase.co");
+
+// Client instance; if keys are placeholder, it gracefully initializes without throwing
+export const supabase = createClient(
+  isSupabaseConfigured ? supabaseUrl : "https://placeholder-domain.supabase.co",
+  isSupabaseConfigured ? supabaseAnonKey : "placeholder-anon-key"
+);
